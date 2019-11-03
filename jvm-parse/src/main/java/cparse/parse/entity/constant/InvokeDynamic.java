@@ -10,6 +10,6 @@ import cparse.parse.ClassBuffer;
  */
 public class InvokeDynamic extends Constant {
     public InvokeDynamic(ClassBuffer buffer, int tag) {
-        super();
+        super(tag);
     }
 }

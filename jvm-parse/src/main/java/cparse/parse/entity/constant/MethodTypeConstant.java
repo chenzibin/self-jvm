@@ -10,6 +10,6 @@ import cparse.parse.ClassBuffer;
  */
 public class MethodTypeConstant extends Constant {
     public MethodTypeConstant(ClassBuffer buffer, int tag) {
-        super();
+        super(tag);
     }
 }

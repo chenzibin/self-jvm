@@ -10,6 +10,6 @@ import cparse.parse.ClassBuffer;
  */
 public class Utf8 extends Constant {
     public Utf8(ClassBuffer buffer, int tag) {
-        super();
+        super(tag);
     }
 }

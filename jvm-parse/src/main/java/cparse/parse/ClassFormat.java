@@ -1,9 +1,8 @@
 package cparse.parse;
 
-import cparse.parse.entity.constant.Constant;
+import cparse.parse.entity.ConstantPool;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class ClassFormat {
     private int majorVersion;
 
     private int constantPoolCount;
-    private List<Constant> constantPool;
+    private ConstantPool constantPool;
 
     private int accessFlags;
     private int thisClass;
@@ -62,12 +61,7 @@ public class ClassFormat {
         this.majorVersion = majorVersion(buffer);
 
         this.constantPoolCount = constantPoolCount(buffer);
-        this.constantPool = new ArrayList<>(this.constantPoolCount - 1);
-
-        ConstantFactory constantFactory = new ConstantFactory();
-        for (int i = 0; i < this.constantPoolCount - 1; i++) {
-            this.constantPool.add(constantFactory.getConstant(buffer));
-        }
+        this.constantPool = new ConstantPool(buffer, this.constantPoolCount);
     }
 
     private String magic(ClassBuffer buffer) {

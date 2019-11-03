@@ -1,0 +1,19 @@
+allprojects {
+    group 'jvm.java'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+        compile group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
+    }
+
+}
