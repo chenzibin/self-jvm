@@ -1,4 +1,4 @@
-package cparse.parse.entity.constant;
+package jvmparse.parse.entity.constant;
 
 import lombok.Data;
 
@@ -20,5 +20,6 @@ public class Constant {
     public Constant(int tag) {
         this.tag = tag;
     }
+
 
 }

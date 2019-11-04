@@ -1,12 +1,14 @@
-package cparse.parse.entity;
+package jvmparse.parse.entity;
 
-import cparse.parse.ClassBuffer;
-import cparse.parse.ConstantFactory;
-import cparse.parse.entity.constant.Constant;
+import jvmparse.parse.ClassBuffer;
+import jvmparse.parse.ConstantFactory;
+import jvmparse.parse.entity.constant.Constant;
+import lombok.Data;
 
 /**
  * Created by chenzibin on 2019/11/2.
  */
+@Data
 public class ConstantPool {
 
     private Constant[] constants;
@@ -22,6 +24,5 @@ public class ConstantPool {
                 i++;
             }
         }
-
     }
 }

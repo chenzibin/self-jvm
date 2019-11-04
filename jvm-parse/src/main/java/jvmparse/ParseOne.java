@@ -1,4 +1,4 @@
-package cparse;
+package jvmparse;
 
 import java.io.File;
 import java.io.FileInputStream;

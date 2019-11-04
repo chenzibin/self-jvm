@@ -1,6 +1,6 @@
-package cparse.parse;
+package jvmparse.parse;
 
-import cparse.parse.entity.constant.*;
+import jvmparse.parse.entity.constant.*;
 
 /**
  * ConstantFactory
@@ -49,9 +49,9 @@ public class ConstantFactory {
             case CONSTANT_UTF8:
                 return new Utf8(buffer, tag);
             case CONSTANT_METHOD_HANDLE:
-                return new MethodHandleConstant(buffer, tag);
+                return new MethodHandleInfo(buffer, tag);
             case CONSTANT_METHOD_TYPE:
-                return new MethodTypeConstant(buffer, tag);
+                return new MethodTypeInfo(buffer, tag);
             case CONSTANT_INVOKE_DYNAMIC:
                 return new InvokeDynamic(buffer, tag);
             default:

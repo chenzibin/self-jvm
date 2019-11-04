@@ -1,4 +1,4 @@
-package cparse.parse;
+package jvmparse.parse;
 
 /**
  * ClassParse

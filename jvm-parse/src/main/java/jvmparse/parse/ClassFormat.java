@@ -1,7 +1,8 @@
-package cparse.parse;
+package jvmparse.parse;
 
-import cparse.parse.entity.ConstantPool;
+import jvmparse.parse.entity.ConstantPool;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -62,6 +63,13 @@ public class ClassFormat {
 
         this.constantPoolCount = constantPoolCount(buffer);
         this.constantPool = new ConstantPool(buffer, this.constantPoolCount);
+
+        this.accessFlags = accessFlags(buffer);
+        this.thisClass = thisClass(buffer);
+        this.superClass = superClass(buffer);
+
+        this.interfacesCount = interfacesCount(buffer);
+
     }
 
     private String magic(ClassBuffer buffer) {
@@ -78,6 +86,22 @@ public class ClassFormat {
     }
 
     private int constantPoolCount(ClassBuffer buffer) {
+        return buffer.u2();
+    }
+
+    private int accessFlags(ClassBuffer buffer) {
+        return buffer.u2();
+    }
+
+    private int thisClass(ClassBuffer buffer) {
+        return buffer.u2();
+    }
+
+    private int superClass(ClassBuffer buffer) {
+        return buffer.u2();
+    }
+
+    private int interfacesCount(ClassBuffer buffer) {
         return buffer.u2();
     }
 }

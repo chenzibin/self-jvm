@@ -1,8 +1,9 @@
-package cparse.parse;
+package jvmparse.parse;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * ClassBuffer
@@ -46,5 +47,11 @@ public class ClassBuffer {
         int i = Byte.toUnsignedInt(buf[offset]);
         offset += 1;
         return i;
+    }
+
+    public byte[] bytes(int length) {
+        byte[] bytes = Arrays.copyOfRange(buf, offset, offset + length);
+        offset += length;
+        return bytes;
     }
 }

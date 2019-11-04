@@ -1,6 +1,7 @@
-package cparse.parse.entity.constant;
+package jvmparse.parse.entity.constant;
 
-import cparse.parse.ClassBuffer;
+import jvmparse.parse.ClassBuffer;
+import lombok.Data;
 
 /**
  * DoubleConstant
@@ -8,6 +9,7 @@ import cparse.parse.ClassBuffer;
  * @author chenzb
  * @date 2019/11/1
  */
+@Data
 public class DoubleInfo extends LongInfo {
     public DoubleInfo(ClassBuffer buffer, int tag) {
         super(buffer, tag);
