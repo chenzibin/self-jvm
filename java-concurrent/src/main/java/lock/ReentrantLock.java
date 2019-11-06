@@ -47,6 +47,15 @@ public class ReentrantLock implements Lock {
 
         private volatile int state;
 
+        /**
+         * 独占线程的同步性由state保证
+         * 两种情况下：
+         * 1、state==0, 表示当前资源未加锁
+         * 2、state!=0 && Thread.currentThread()==exclusiveOwnerThread, 对于每个线程来说，setState、 setExclusiveOwnerThread、getState、getExclusiveOwnerThread 是顺序执行的，
+         *      即不存在state!=0(锁被占有), 但对于当前线程来说，缓存中exclusiveOwnerThread是当前线程，但内存中该值不是当前线程的情况
+         */
+        private Thread exclusiveOwnerThread;
+
         private Node head;
 
         private Node tail;
@@ -55,10 +64,25 @@ public class ReentrantLock implements Lock {
         public void lock() {
             Thread current = Thread.currentThread();
             if (state == 0) {
-                // 锁未被占用， 可尝试获取，由于当前位置存在竞争
+                /**
+                 *  锁未被占用， 可尝试获取，由于当前位置存在竞争
+                 *  若获取到锁， 更新state, 更有独占线程
+                 *  若未获取到锁， 中断线程
+                 */
                 if (true) {
+                    Node t = tail;
+                    Node h = head;
+                    Node s;
+                    h != t && ((s = h.next) == null || s.thread != Thread.currentThread());
 
+                    current.interrupt();
                 }
+            } else if (current == exclusiveOwnerThread) {
+                /**
+                 *  锁已被当前线程占用, 重入锁，更新state
+                 */
+                state++;
+
             }
         }
 
