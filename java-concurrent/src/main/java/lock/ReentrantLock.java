@@ -95,12 +95,16 @@ public class ReentrantLock implements Lock {
             Thread current = Thread.currentThread();
             if (state == 0) {
                 /*
-                 *  锁未被占用， 可尝试获取，由于当前位置存在竞争
+                 *  锁未被占用， 对于公平锁，若无等待线程或等待线程第一个即当前线程，则可尝试获取
+                 *  由于当前位置存在竞争
                  *  若获取到锁， 更新state, 更新独占线程
                  *  若未获取到锁， 中断线程
                  */
-                if (stateUpdater.compareAndSet(this, 0, 1)) {
-                    exclusiveOwnerThread = current;
+                //  队列为空  或者  在队列不空的情况下， 第一个等待线程即当前线程
+                if (head == tail || (head.next != null && head.next.thread == current) ) {
+                    if (stateUpdater.compareAndSet(this, 0, 1)) {
+                        exclusiveOwnerThread = current;
+                    }
                 }
             } else if (current == exclusiveOwnerThread) {
                 /*
@@ -117,11 +121,13 @@ public class ReentrantLock implements Lock {
                 Node t = tail;
                 if (t == null) {
                     if (tailUpdater.compareAndSet(this, null, new Node())) {
+                        // h!=t && h.next==null
                         head = tail;
                         t = tail;
                     }
                 }
                 if (tailUpdater.compareAndSet(this, tail, node)) {
+                    // h!=t && h.next==null
                     node.prev = t;
                     t.next = node;
                 }
