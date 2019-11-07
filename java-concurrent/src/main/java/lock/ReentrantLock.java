@@ -1,6 +1,7 @@
 package lock;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
@@ -13,7 +14,17 @@ import java.util.concurrent.locks.Lock;
 public class ReentrantLock implements Lock {
 
     class Node {
+        Thread thread;
 
+        Node prev;
+        Node next;
+
+        public Node() {
+        }
+
+        public Node(Thread thread) {
+            this.thread = thread;
+        }
     }
 
     interface Sync {
@@ -22,6 +33,12 @@ public class ReentrantLock implements Lock {
          * 加锁
          */
         void lock();
+
+        /**
+         * 获取锁
+         * @param arg
+         */
+        void acquire(int arg);
 
         /**
          * 释放锁
@@ -34,6 +51,11 @@ public class ReentrantLock implements Lock {
 
         @Override
         public void lock() {
+
+        }
+
+        @Override
+        public void acquire(int arg) {
 
         }
 
@@ -60,29 +82,49 @@ public class ReentrantLock implements Lock {
 
         private Node tail;
 
+        AtomicReferenceFieldUpdater<FairSync, Integer> stateUpdater = AtomicReferenceFieldUpdater.newUpdater(FairSync.class, int.class, "state");
+        AtomicReferenceFieldUpdater<FairSync, Node> tailUpdater = AtomicReferenceFieldUpdater.newUpdater(FairSync.class, Node.class, "tail");
+
         @Override
         public void lock() {
+            acquire(1);
+        }
+
+        @Override
+        public void acquire(int arg) {
             Thread current = Thread.currentThread();
             if (state == 0) {
-                /**
+                /*
                  *  锁未被占用， 可尝试获取，由于当前位置存在竞争
-                 *  若获取到锁， 更新state, 更有独占线程
+                 *  若获取到锁， 更新state, 更新独占线程
                  *  若未获取到锁， 中断线程
                  */
-                if (true) {
-                    Node t = tail;
-                    Node h = head;
-                    Node s;
-                    h != t && ((s = h.next) == null || s.thread != Thread.currentThread());
-
-                    current.interrupt();
+                if (stateUpdater.compareAndSet(this, 0, 1)) {
+                    exclusiveOwnerThread = current;
                 }
             } else if (current == exclusiveOwnerThread) {
-                /**
+                /*
                  *  锁已被当前线程占用, 重入锁，更新state
+                 *  由于此时，不可能存在其他线程读写state，故state++无需使用原子性操作原语
                  */
                 state++;
-
+            } else {
+                /*
+                 *  锁被其他线程占用，执行入队操作
+                 *  队列的第一个节点必须是空节点
+                 */
+                Node node = new Node(current);
+                Node t = tail;
+                if (t == null) {
+                    if (tailUpdater.compareAndSet(this, null, new Node())) {
+                        head = tail;
+                        t = tail;
+                    }
+                }
+                if (tailUpdater.compareAndSet(this, tail, node)) {
+                    node.prev = t;
+                    t.next = node;
+                }
             }
         }
 

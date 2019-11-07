@@ -16,4 +16,10 @@ public class ExampleClass {
 
     String s = "str";
 
+    volatile int t;
+
+    public void test() {
+        t = 1;
+        System.out.println(t);
+    }
 }
