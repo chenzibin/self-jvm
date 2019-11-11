@@ -1,7 +1,7 @@
 package jvmparse.parse.entity;
 
 import jvmparse.parse.ClassBuffer;
-import jvmparse.parse.ConstantFactory;
+import jvmparse.parse.factory.ConstantFactory;
 import jvmparse.parse.entity.constant.Constant;
 import lombok.Data;
 

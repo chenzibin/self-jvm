@@ -109,9 +109,9 @@ public class ReentrantLock implements Lock {
             } else if (current == exclusiveOwnerThread) {
                 /*
                  *  锁已被当前线程占用, 重入锁，更新state
-                 *  由于此时，不可能存在其他线程读写state，故state++无需使用原子性操作原语
+                 *  由于此时，不可能存在其他线程读写state，故state+=arg无需使用原子性操作
                  */
-                state++;
+                state += arg;
             } else {
                 /*
                  *  锁被其他线程占用，执行入队操作
@@ -136,7 +136,15 @@ public class ReentrantLock implements Lock {
 
         @Override
         public void release(int arg) {
-
+            Thread current = Thread.currentThread();
+            if (current != exclusiveOwnerThread) {
+                throw new IllegalMonitorStateException();
+            }
+            int newState = state - arg;
+            if (newState == 0) {
+                exclusiveOwnerThread = null;
+            }
+            state = newState;
         }
 
     }

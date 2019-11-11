@@ -1,5 +1,6 @@
 package jvmparse;
 
+import com.alibaba.fastjson.JSONObject;
 import jvmparse.parse.ClassFormat;
 import jvmparse.parse.ClassParse;
 
@@ -17,5 +18,6 @@ public class ParseFormat {
         String classPath = "F:\\work\\code\\jvm-java\\jvm-parse\\out\\test\\classes\\jvmparse\\ExampleClass.class";
         ClassFormat format = ClassParse.classPath(classPath).parse();
         System.out.println(format.toString());
+        System.out.println(JSONObject.toJSONString(format, true));
     }
 }

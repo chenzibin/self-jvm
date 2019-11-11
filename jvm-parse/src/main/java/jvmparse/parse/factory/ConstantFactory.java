@@ -1,5 +1,6 @@
-package jvmparse.parse;
+package jvmparse.parse.factory;
 
+import jvmparse.parse.ClassBuffer;
 import jvmparse.parse.entity.constant.*;
 
 /**

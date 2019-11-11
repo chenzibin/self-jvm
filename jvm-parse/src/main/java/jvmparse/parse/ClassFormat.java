@@ -1,10 +1,16 @@
 package jvmparse.parse;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import jvmparse.parse.entity.ConstantPool;
+import jvmparse.parse.entity.FieldInfo;
+import jvmparse.parse.entity.constant.ClassInfo;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * ClassStruct
@@ -13,6 +19,7 @@ import java.util.List;
  * @date 2019/10/30
  */
 @Data
+@JSONType(orders = {"magic", "minorVersion", "majorVersion", "constantPoolCount", "constantPool", "accessFlags", "thisClass", "superClass", "interfacesCount", "interfaces", "fieldsCount", "fields", "methodsCount", "methods", "attributesCount", "attributes"})
 public class ClassFormat {
 
     /**
@@ -45,10 +52,10 @@ public class ClassFormat {
     private int superClass;
 
     private int interfacesCount;
-    private List<Object> interfaces;
+    private List<Integer> interfaces;
 
     private int fieldsCount;
-    private List<Object> fields;
+    private List<FieldInfo> fields;
 
     private int methodsCount;
     private List<Object> methods;
@@ -69,7 +76,10 @@ public class ClassFormat {
         this.superClass = superClass(buffer);
 
         this.interfacesCount = interfacesCount(buffer);
+        this.interfaces = IntStream.range(0, this.interfacesCount).mapToObj(i -> buffer.u2()).collect(Collectors.toList());
 
+        this.fieldsCount = buffer.u2();
+        this.fields = IntStream.range(0, this.fieldsCount).mapToObj(i -> new FieldInfo(buffer, this.constantPool)).collect(Collectors.toList());
     }
 
     private String magic(ClassBuffer buffer) {
