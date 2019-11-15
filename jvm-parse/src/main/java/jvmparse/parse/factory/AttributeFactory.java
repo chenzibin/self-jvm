@@ -2,8 +2,8 @@ package jvmparse.parse.factory;
 
 import jvmparse.parse.ClassBuffer;
 import jvmparse.parse.entity.ConstantPool;
-import jvmparse.parse.entity.attribute.Attribute;
-import jvmparse.parse.entity.attribute.ConstantValue;
+import jvmparse.parse.entity.attribute.*;
+import jvmparse.parse.entity.attribute.Deprecated;
 import jvmparse.parse.entity.constant.Utf8;
 
 /**
@@ -42,7 +42,7 @@ public class AttributeFactory {
             case CONSTANT_VALUE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case CODE:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new Code(buffer, attributeNameIndex);
             case STACK_MAP_TABLE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case EXCEPTIONS:
@@ -66,9 +66,9 @@ public class AttributeFactory {
             case LOCAL_VARIABLE_TYPE_TABLE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case DEPRECATED:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new Deprecated(buffer, attributeNameIndex);
             case RUNTIME_VISIBLE_ANNOTATIONS:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new RuntimeVisibleAnnotations(buffer, attributeNameIndex);
             case RUNTIME_INVISIBLE_ANNOTATIONS:
                 return new ConstantValue(buffer, attributeNameIndex);
             case RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS:

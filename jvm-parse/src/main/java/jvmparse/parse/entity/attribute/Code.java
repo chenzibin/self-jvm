@@ -20,14 +20,23 @@ public class Code extends Attribute {
      * u4   code_length
      * u1   code[code_length]
      * u2   exception_table_length
-     *      exception_table[exception_table_length]
+     * {
+     *      u2  start_pc
+     *      u2  end_pc
+     *      u2  handler_pc
+     *      u2  catch_type
+     * }    exception_table[exception_table_length]
      * u2   attributes_count
      * attribute_info   attributes[attributes_count]
      */
-    private int constantValueIndex;
+    private int maxStack;
+    private int maxLocals;
+    private int codeLength;
 
     public Code(ClassBuffer buffer, int attributeNameIndex) {
         super(buffer, attributeNameIndex);
-        this.constantValueIndex = buffer.u2();
+        this.maxStack = buffer.u2();
+        this.maxLocals = buffer.u2();
+        this.codeLength = buffer.u4();
     }
 }

@@ -3,6 +3,7 @@ package jvmparse.parse;
 import com.alibaba.fastjson.annotation.JSONType;
 import jvmparse.parse.entity.ConstantPool;
 import jvmparse.parse.entity.FieldInfo;
+import jvmparse.parse.entity.MethodInfo;
 import jvmparse.parse.entity.constant.ClassInfo;
 import lombok.Data;
 import lombok.ToString;
@@ -68,18 +69,24 @@ public class ClassFormat {
         this.minorVersion = minorVersion(buffer);
         this.majorVersion = majorVersion(buffer);
 
-        this.constantPoolCount = constantPoolCount(buffer);
+        this.constantPoolCount = buffer.u2();
         this.constantPool = new ConstantPool(buffer, this.constantPoolCount);
 
         this.accessFlags = accessFlags(buffer);
         this.thisClass = thisClass(buffer);
         this.superClass = superClass(buffer);
 
-        this.interfacesCount = interfacesCount(buffer);
+        this.interfacesCount = buffer.u2();
         this.interfaces = IntStream.range(0, this.interfacesCount).mapToObj(i -> buffer.u2()).collect(Collectors.toList());
 
         this.fieldsCount = buffer.u2();
         this.fields = IntStream.range(0, this.fieldsCount).mapToObj(i -> new FieldInfo(buffer, this.constantPool)).collect(Collectors.toList());
+
+        this.methodsCount = buffer.u2();
+        this.methods = IntStream.range(0, this.methodsCount).mapToObj(i -> new MethodInfo(buffer, this.constantPool)).collect(Collectors.toList());
+
+        this.attributesCount = buffer.u2();
+
     }
 
     private String magic(ClassBuffer buffer) {
@@ -95,10 +102,6 @@ public class ClassFormat {
         return buffer.u2();
     }
 
-    private int constantPoolCount(ClassBuffer buffer) {
-        return buffer.u2();
-    }
-
     private int accessFlags(ClassBuffer buffer) {
         return buffer.u2();
     }
@@ -111,7 +114,4 @@ public class ClassFormat {
         return buffer.u2();
     }
 
-    private int interfacesCount(ClassBuffer buffer) {
-        return buffer.u2();
-    }
 }

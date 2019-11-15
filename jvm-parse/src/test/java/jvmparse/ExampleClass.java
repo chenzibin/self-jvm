@@ -1,5 +1,7 @@
 package jvmparse;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -23,6 +25,8 @@ public class ExampleClass implements Lock {
 
     volatile int t;
 
+
+//    @JSONField(name = "testttt")
     public void test() {
         t = 1;
         System.out.println(t);
