@@ -3,6 +3,10 @@ package jvmparse.parse.entity.attribute;
 import jvmparse.parse.ClassBuffer;
 import lombok.Data;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * Code
  *
@@ -32,11 +36,15 @@ public class Code extends Attribute {
     private int maxStack;
     private int maxLocals;
     private int codeLength;
+    private List<Integer> code;
 
     public Code(ClassBuffer buffer, int attributeNameIndex) {
         super(buffer, attributeNameIndex);
         this.maxStack = buffer.u2();
         this.maxLocals = buffer.u2();
         this.codeLength = buffer.u4();
+        this.code = IntStream.range(0, codeLength).mapToObj(i -> buffer.u1()).collect(Collectors.toList());
     }
+
+
 }

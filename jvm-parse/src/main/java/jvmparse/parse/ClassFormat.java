@@ -83,9 +83,9 @@ public class ClassFormat {
         this.fields = IntStream.range(0, this.fieldsCount).mapToObj(i -> new FieldInfo(buffer, this.constantPool)).collect(Collectors.toList());
 
         this.methodsCount = buffer.u2();
-        this.methods = IntStream.range(0, this.methodsCount).mapToObj(i -> new MethodInfo(buffer, this.constantPool)).collect(Collectors.toList());
+        this.methods = IntStream.range(0, 1).mapToObj(i -> new MethodInfo(buffer, this.constantPool)).collect(Collectors.toList());
 
-        this.attributesCount = buffer.u2();
+//        this.attributesCount = buffer.u2();
 
     }
 
