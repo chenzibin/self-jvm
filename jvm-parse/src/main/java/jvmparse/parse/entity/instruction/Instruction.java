@@ -1,12 +1,15 @@
 package jvmparse.parse.entity.instruction;
 
+import lombok.Data;
+
 /**
  * Instruction
  *
  * @author chenzb
  * @date 2019/11/20
  */
-public class Instruction {
+@Data
+public abstract class Instruction {
 
     private int opcode;
 

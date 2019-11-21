@@ -1,6 +1,7 @@
 package jvmparse.parse.entity;
 
 import jvmparse.parse.ClassBuffer;
+import jvmparse.parse.entity.attribute.Attribute;
 import jvmparse.parse.factory.AttributeFactory;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class MethodInfo {
     private int nameIndex;
     private int descriptorIndex;
     private int attributesCount;
-    private List<Object> attributeInfo;
+    private List<Attribute> attributeInfo;
 
     public MethodInfo(ClassBuffer buffer, ConstantPool constantPool) {
         this.accessFlags = buffer.u2();

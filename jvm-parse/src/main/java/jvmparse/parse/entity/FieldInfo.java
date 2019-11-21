@@ -1,6 +1,7 @@
 package jvmparse.parse.entity;
 
 import jvmparse.parse.ClassBuffer;
+import jvmparse.parse.entity.attribute.Attribute;
 import jvmparse.parse.entity.constant.Constant;
 import jvmparse.parse.entity.constant.Utf8;
 import jvmparse.parse.factory.AttributeFactory;
@@ -32,7 +33,7 @@ public class FieldInfo {
     private int nameIndex;
     private int descriptorIndex;
     private int attributesCount;
-    private List<Object> attributeInfo;
+    private List<Attribute> attributeInfo;
 
     public FieldInfo(ClassBuffer buffer, ConstantPool constantPool) {
         this.accessFlags = buffer.u2();

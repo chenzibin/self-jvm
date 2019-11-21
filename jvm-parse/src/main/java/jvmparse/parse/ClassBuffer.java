@@ -1,5 +1,7 @@
 package jvmparse.parse;
 
+import lombok.Data;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.util.Arrays;
  * @author chenzb
  * @date 2019/10/30
  */
+@Data
 public class ClassBuffer {
 
     private byte[] buf;

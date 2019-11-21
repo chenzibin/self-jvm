@@ -42,7 +42,7 @@ public class AttributeFactory {
             case CONSTANT_VALUE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case CODE:
-                return new Code(buffer, attributeNameIndex);
+                return new Code(buffer, attributeNameIndex, constantPool);
             case STACK_MAP_TABLE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case EXCEPTIONS:
