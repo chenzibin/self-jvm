@@ -4,6 +4,8 @@ import jvmparse.parse.ClassBuffer;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * ConstantValue
@@ -23,17 +25,18 @@ public class LineNumberTable extends Attribute {
      *     u2   line_number
      * } line_number_table[line_number_table_length]
      */
-    private int constantValueIndex;
     private int lineNumberTableLength;
     private List<LineNumber> lineNumberTable;
 
     public LineNumberTable(ClassBuffer buffer, int attributeNameIndex) {
         super(buffer, attributeNameIndex);
-        this.constantValueIndex = buffer.u2();
         this.lineNumberTableLength = buffer.u2();
-
+        this.lineNumberTable = IntStream.range(0, this.lineNumberTableLength)
+                .mapToObj(i -> new LineNumber(buffer))
+                .collect(Collectors.toList());
     }
 
+    @Data
     class LineNumber {
         private int startPc;
         private int lineNumber;

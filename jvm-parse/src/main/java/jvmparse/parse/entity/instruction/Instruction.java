@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2019/11/20
  */
 @Data
-public abstract class Instruction {
+public class Instruction {
 
     private int opcode;
 

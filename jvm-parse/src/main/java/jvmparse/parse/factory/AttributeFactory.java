@@ -38,6 +38,7 @@ public class AttributeFactory {
     public Attribute getAttribute(ClassBuffer buffer, ConstantPool constantPool) {
         int attributeNameIndex = buffer.u2();
         Utf8 utf8 = (Utf8) constantPool.getConstants()[attributeNameIndex];
+        System.out.println(utf8.getBytes());
         switch (utf8.getBytes()) {
             case CONSTANT_VALUE:
                 return new ConstantValue(buffer, attributeNameIndex);
@@ -46,7 +47,7 @@ public class AttributeFactory {
             case STACK_MAP_TABLE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case EXCEPTIONS:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new Exceptions(buffer, attributeNameIndex);
             case INNER_CLASSES:
                 return new ConstantValue(buffer, attributeNameIndex);
             case ENCLOSING_METHOD:
@@ -60,9 +61,9 @@ public class AttributeFactory {
             case SOURCE_DEBUG_EXTENSION:
                 return new ConstantValue(buffer, attributeNameIndex);
             case LINE_NUMBER_TABLE:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new LineNumberTable(buffer, attributeNameIndex);
             case LOCAL_VARIABLE_TABLE:
-                return new ConstantValue(buffer, attributeNameIndex);
+                return new LocalVariableTable(buffer, attributeNameIndex);
             case LOCAL_VARIABLE_TYPE_TABLE:
                 return new ConstantValue(buffer, attributeNameIndex);
             case DEPRECATED:

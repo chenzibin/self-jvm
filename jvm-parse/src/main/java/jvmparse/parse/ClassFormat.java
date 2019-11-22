@@ -4,10 +4,13 @@ import com.alibaba.fastjson.annotation.JSONType;
 import jvmparse.parse.entity.ConstantPool;
 import jvmparse.parse.entity.FieldInfo;
 import jvmparse.parse.entity.MethodInfo;
+import jvmparse.parse.entity.attribute.Attribute;
 import jvmparse.parse.entity.constant.ClassInfo;
+import jvmparse.parse.factory.AttributeFactory;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.management.AttributeNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,10 +62,10 @@ public class ClassFormat {
     private List<FieldInfo> fields;
 
     private int methodsCount;
-    private List<Object> methods;
+    private List<MethodInfo> methods;
 
     private int attributesCount;
-    private List<Object> attributes;
+    private List<Attribute> attributes;
 
     public ClassFormat(ClassBuffer buffer) {
         this.magic = magic(buffer);
@@ -83,10 +86,11 @@ public class ClassFormat {
         this.fields = IntStream.range(0, this.fieldsCount).mapToObj(i -> new FieldInfo(buffer, this.constantPool)).collect(Collectors.toList());
 
         this.methodsCount = buffer.u2();
-        this.methods = IntStream.range(0, 1).mapToObj(i -> new MethodInfo(buffer, this.constantPool)).collect(Collectors.toList());
+        this.methods = IntStream.range(0, this.methodsCount).mapToObj(i -> new MethodInfo(buffer, this.constantPool)).collect(Collectors.toList());
 
-//        this.attributesCount = buffer.u2();
-
+        AttributeFactory factory = new AttributeFactory();
+        this.attributesCount = buffer.u2();
+        this.attributes = IntStream.range(0, this.attributesCount).mapToObj(i -> factory.getAttribute(buffer, this.constantPool)).collect(Collectors.toList());
     }
 
     private String magic(ClassBuffer buffer) {

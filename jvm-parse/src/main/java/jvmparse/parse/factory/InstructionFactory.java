@@ -220,21 +220,21 @@ public class InstructionFactory {
             case NOP:
                 return null;
             case ACONST_NULL:
-                return null;
+                return new Instruction(opcode);
             case ICONST_M1:
                 return null;
             case ICONST_0:
                 return null;
             case ICONST_1:
-                return null;
+                return new Instruction(opcode);
             case ICONST_2:
-                return null;
+                return new Instruction(opcode);
             case ICONST_3:
-                return null;
+                return new Instruction(opcode);
             case ICONST_4:
-                return null;
+                return new Instruction(opcode);
             case ICONST_5:
-                return null;
+                return new Instruction(opcode);
             case LCONST_0:
                 return null;
             case LCONST_1:
@@ -562,7 +562,7 @@ public class InstructionFactory {
             case LOOKUPSWITCH:
                 return null;
             case IRETURN:
-                return null;
+                return new Instruction(opcode);
             case LRETURN:
                 return null;
             case FRETURN:
@@ -570,23 +570,23 @@ public class InstructionFactory {
             case DRETURN:
                 return null;
             case ARETURN:
-                return null;
+                return new Instruction(opcode);
             case RETURN:
                 return new Return(opcode);
             case GETSTATIC:
-                return null;
+                return new GetStatic(buffer, opcode);
             case PUTSTATIC:
-                return null;
+                return new GetStatic(buffer, opcode);
             case GETFIELD:
                 return null;
             case PUTFIELD:
                 return new PutField(buffer, opcode);
             case INVOKEVIRTUAL:
-                return null;
+                return new InvokeVirtual(buffer, opcode);
             case INVOKESPECIAL:
                 return new InvokeSpecial(buffer, opcode);
             case INVOKESTATIC:
-                return null;
+                return new InvokeSpecial(buffer, opcode);
             case INVOKEINTERFACE:
                 return null;
             case NEW:

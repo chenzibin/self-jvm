@@ -71,6 +71,7 @@ public class Code extends Attribute {
                 .collect(Collectors.toList());
     }
 
+    @Data
     class Exception {
 
         /**
