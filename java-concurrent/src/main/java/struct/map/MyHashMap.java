@@ -12,24 +12,38 @@ import java.util.Set;
  */
 public class MyHashMap<K,V> implements Map<K,V> {
 
-    Node<K,V>[] table;
+    public static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
-    public class Node<K,V> implements Entry<K,V> {
+    /**
+     * 延迟到需要的时候初始化，在构造函数中不进行初始化
+     */
+    private Node<K,V>[] table;
 
-        @Override
-        public K getKey() {
-            return null;
-        }
+    /**
+     * The number of key-value mappings contained in this map
+     */
+    private int size;
 
-        @Override
-        public V getValue() {
-            return null;
-        }
+    /**
+     * 加载因子, 每次扩容的比例大小
+     */
+    private final float loadFactor;
 
-        @Override
-        public V setValue(V value) {
-            return null;
-        }
+    /**
+     * 阈值，下次扩容后的大小
+     */
+    private int threshold;
+
+    public MyHashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+    }
+
+    public MyHashMap(int initialCapacity) {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
+    }
+
+    public MyHashMap(int initialCapacity, float loadFactor) {
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
     }
 
     @Override
@@ -60,8 +74,9 @@ public class MyHashMap<K,V> implements Map<K,V> {
     @Override
     public V put(K key, V value) {
         if (table == null) {
-            table = new Node[8];
+            table = new Node[threshold];
         }
+
         return null;
     }
 
@@ -93,5 +108,24 @@ public class MyHashMap<K,V> implements Map<K,V> {
     @Override
     public Set<Entry<K, V>> entrySet() {
         return null;
+    }
+
+
+    public class Node<K,V> implements Entry<K,V> {
+
+        @Override
+        public K getKey() {
+            return null;
+        }
+
+        @Override
+        public V getValue() {
+            return null;
+        }
+
+        @Override
+        public V setValue(V value) {
+            return null;
+        }
     }
 }
