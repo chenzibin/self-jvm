@@ -1,5 +1,5 @@
-rootProject.name = 'jvm-java'
+rootProject.name = 'self-jvm'
 
-include 'jvm-parse'
-include 'java-concurrent'
+include 'self-jvm-parse'
+include 'self-jvm-base-java'
 
