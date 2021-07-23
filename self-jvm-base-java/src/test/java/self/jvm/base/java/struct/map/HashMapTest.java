@@ -23,6 +23,10 @@ public class HashMapTest {
 
     @Test
     public void testPut() {
-
+        String url = "http://1/";
+        if (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
+        }
+        System.out.println(url + "/123");
     }
 }

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * HashMapDemo
@@ -35,6 +36,27 @@ public class HashMapDemo {
         int cap = 8;
         System.out.println(tableSizeFor8(cap));
         System.out.println(tableSizeFor12(cap));
+    }
+
+    /**
+     * 动态扩容
+     *  当存储量超过阈值时，自动扩容为2倍
+     *  阈值计算: threshold * loadFactor, default loadFactor: 0.75
+     * 哈希冲突
+     * hashcode: h
+     */
+    @Test
+    public void testMyHashMap() {
+        Map<String, String> map = new HashMap<>(2);
+        map.put("1", "1");
+        map.put("2", "2");
+        map.put("3", "3");
+        map.put("4", "3");
+        map.put("5", "5");
+        map.put("6", "6");
+        map.put("7", "7");
+        map.put("8", "8");
+        map.put("9", "9");
     }
 
 
